@@ -1,0 +1,188 @@
+apply plugin: 'com.android.application'
+
+def versionMajor = 2
+def versionMinor = 2
+def versionPatch = 3
+android {
+    namespace "com.webling.graincorp"
+    compileSdkVersion 33
+    buildToolsVersion "30.0.3"
+    defaultConfig {
+        applicationId "com.webling.graincorp"
+        minSdkVersion 24
+        targetSdkVersion 33
+        versionCode System.getenv("BUILD_NUMBER") as Integer
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../keystore/graincorp.keystore")
+            storePassword "O5k5~sfb7JfKqRv"
+            keyAlias "GrainCorp"
+            keyPassword "O5k5~sfb7JfKqRv"
+        }
+        staging {
+            storeFile file("../keystore/graincorp.keystore")
+            storePassword "O5k5~sfb7JfKqRv"
+            keyAlias "GrainCorp"
+            keyPassword "O5k5~sfb7JfKqRv"
+        }
+        release {
+            storeFile file("../keystore/graincorp.keystore")
+            storePassword "O5k5~sfb7JfKqRv"
+            keyAlias "GrainCorp"
+            keyPassword "O5k5~sfb7JfKqRv"
+        }
+    }
+
+    buildTypes {
+        internalDebug {
+            applicationIdSuffix '.dev'
+            debuggable true
+            minifyEnabled false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
+        productionDebug {
+            applicationIdSuffix '.qa'
+            debuggable true
+            minifyEnabled false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
+        internalStaging {
+            applicationIdSuffix '.stg'
+            debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        internalRelease {
+            applicationIdSuffix '.uat'
+            debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        productionRelease {
+            debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    // Not using the Android default "release" and "debug" build variants hence ignoring it during build phase
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release' || variant.buildType.name == ('debug')) {
+            variant.setIgnore(true)
+        }
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.getName() == "internalDebug") {
+            variant.buildConfigField("String", "API_BASE_URL", "\"https://godev.graincorp.com.au/\"")
+            resValue 'string', 'appcenter_api_key', '081fd229-5e7e-41e3-b368-b14a0925231d'
+        } else if (variant.getName() == "productionDebug") {
+            variant.buildConfigField("String", "API_BASE_URL", "\"https://goextqa.graincorp.com.au/\"")
+            resValue 'string', 'appcenter_api_key', '3d7064e4-8c4f-4645-955d-e1a63d3a4bd3'
+        } else if (variant.getName() == "internalRelease") {
+            variant.buildConfigField("String", "API_BASE_URL", "\"https://goextqa.graincorp.com.au/\"")
+            resValue 'string', 'appcenter_api_key', '6d699526-dcaf-4c2b-9097-eaf3df87a2b9'
+        } else if (variant.getName() == "internalStaging") {
+            variant.buildConfigField("String", "API_BASE_URL", "\"https://goextstg.graincorp.com.au/\"")
+            resValue 'string', 'appcenter_api_key', 'fbddf9a8-57ce-4025-98a2-5bab18cce48c'
+        } else if (variant.getName() == "productionRelease") {
+            variant.buildConfigField("String", "API_BASE_URL", "\"https://cropconnect.com.au/\"")
+            resValue 'string', 'appcenter_api_key', '698a0062-e55c-40c0-bae9-b64b7c6dfe85'
+        }
+        buildConfigField("String","VERSION_NAME","\"${defaultConfig.versionName}\"")
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url "https://maven.google.com"
+        }
+        maven { url "https://www.jitpack.io" }
+    }
+}
+
+ext {
+    androidxVersion = "1.1.0"
+
+    supportDependencies = [
+            recyclerView     : "androidx.recyclerview:recyclerview:${androidxVersion}",
+            cardView         : "androidx.cardview:cardview:1.0.0",
+            appCompat        : "androidx.appcompat:appcompat:1.2.0",
+            supportAnnotation: "androidx.annotation:annotation:${androidxVersion}",
+    ]
+
+    retrofitVersion = '2.9.0'
+    okHttpVersion = '4.10.0'
+    dbflowVersion = "4.2.4"
+    daggerVersion = "2.42"
+    appCenterSdkVersion = '3.3.0'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.3.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.recyclerView
+    implementation supportDependencies.supportAnnotation
+    implementation supportDependencies.cardView
+    implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'joda-time:joda-time:2.10.6'
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflowVersion}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflowVersion}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflowVersion}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-rx2:${dbflowVersion}"
+    implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.1'
+
+    implementation "com.google.dagger:dagger:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    testImplementation 'junit:junit:4.13.2'
+
+    androidTestImplementation 'org.mockito:mockito-core:5.3.0'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+}
+apply plugin: 'com.google.gms.google-services'

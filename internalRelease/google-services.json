@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "43217915277",
+    "firebase_url": "https://graincorp-hybrid-app-d4939.firebaseio.com",
+    "project_id": "graincorp-hybrid-app-d4939",
+    "storage_bucket": "graincorp-hybrid-app-d4939.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43217915277:android:f6d1e9a0f0697038",
+        "android_client_info": {
+          "package_name": "com.webling.graincorp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43217915277-7dnc2v0mto93d3fpkkp3d6t87q216njg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webling.graincorp",
+            "certificate_hash": "e441d87633a9bd75984d34f8afa51a09df6d0298"
+          }
+        },
+        {
+          "client_id": "43217915277-2galpchbqnj4djldjfkf8bd4329sih9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdFKlG7X-yAMQ9qkxCJe7S4fBcjTHMIpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43217915277-2galpchbqnj4djldjfkf8bd4329sih9f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "43217915277-gia8dnp9dfu7qff49hj792u7unt7odcs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "au.com.graincorp.release.GrainCorp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43217915277:android:d12b561feba42e2e",
+        "android_client_info": {
+          "package_name": "com.webling.graincorp.stg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43217915277-2galpchbqnj4djldjfkf8bd4329sih9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdFKlG7X-yAMQ9qkxCJe7S4fBcjTHMIpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43217915277-2galpchbqnj4djldjfkf8bd4329sih9f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "43217915277-gia8dnp9dfu7qff49hj792u7unt7odcs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "au.com.graincorp.release.GrainCorp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43217915277:android:39ffbef298d90f18",
+        "android_client_info": {
+          "package_name": "com.webling.graincorp.uat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43217915277-74ttj946vetpv0jde2ioa2qb4patcllo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webling.graincorp.uat",
+            "certificate_hash": "e441d87633a9bd75984d34f8afa51a09df6d0298"
+          }
+        },
+        {
+          "client_id": "43217915277-2galpchbqnj4djldjfkf8bd4329sih9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdFKlG7X-yAMQ9qkxCJe7S4fBcjTHMIpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43217915277-2galpchbqnj4djldjfkf8bd4329sih9f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "43217915277-gia8dnp9dfu7qff49hj792u7unt7odcs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "au.com.graincorp.release.GrainCorp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

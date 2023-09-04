@@ -1,0 +1,387 @@
+
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+require 'pathname'
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.190.0"
+
+default_platform :android
+
+fastlane_require "json"
+
+#Constant
+default_settings_name = "default"
+
+#Parse the config file
+config_file = File.read("config.json")
+config = JSON.parse(config_file)
+
+hockey_api_token = config["hockey_api_token"]
+appcenter_api_token = config["appcenter_api_token"]
+use_appcenter_to_upload = config["use_appcenter_to_upload"]
+build_variants = config["build_variants"]
+settings = config["settings"]
+ENV["SLACK_URL"] = config["slack_webhook_url"] || ""
+ENV["FL_SLACK_CHANNEL"] = config["slack_channel"] || ""
+ENV["FL_SLACK_USERNAME"] = "Jenkins"
+ENV["FL_SLACK_ICON_URL"] = "https://integrations.apteligent.com/wp-content/uploads/2015/10/jenkins-icon.png"
+
+platform :android do
+  before_all do
+
+  end
+
+  ##### PUBLIC #####
+
+  desc "Run unit tests"
+  lane :test_only do
+    all_builds_test
+  end
+
+  desc "Run unit tests and create build for all build variants in config.json"
+  lane :test_and_build do
+    all_builds_test
+    all_builds(hockey: false)
+  end
+
+  desc "Create build for all build variants specified in config.json"
+  lane :build_only do
+    all_builds(hockey: false)
+  end
+
+  desc "Create build for all build variants specified in config.json and upload to HockeyApp"
+  lane :build_and_upload do |options|
+    notify_slack_of_tag(version_number: options[:version_number])
+    all_builds(
+      hockey: true,
+      version_number: options[:version_number]
+    )
+  end
+
+  desc "Run unit tests, create builds and upload to hockey"
+  lane :test_build_and_upload do |options|
+    notify_slack_of_tag(version_number: options[:version_number])
+    gradle(task: "test")
+    all_builds(
+      hockey: true,
+      version_number: options[:version_number]
+    )
+  end
+
+  desc "Run SonarQube Analysis"
+  lane :sonar_only do |options|
+    gradle(task: "sonarqube")
+  end
+
+  desc "Run functional tests"
+  lane :functional_test_only do |options|
+    all_builds(hockey: false)
+    run_calabash(apk_path: options[:apk_path])
+  end
+
+  ##### PRIVATE #####
+
+  desc "Iterate through each build variants and run tests on them"
+  private_lane :all_builds_test do
+    for variant in build_variants do
+        setting = get_setting(variant: variant)
+        exclude = setting["exclude_from_test"]
+        if !exclude
+            flavor = variant["product_flavor"]
+            build_type = variant["build_type"]
+            build_module = setting["module_name"].to_s.empty? ? "" : "#{setting["module_name"].to_s}:"            
+            build_task = "clean #{build_module}test"
+            gradle(task: build_task, flavor: flavor, build_type: build_type)
+        end
+    end
+  end
+
+  
+  desc "Notify slack that tag is building"
+  private_lane :notify_slack_of_tag do |options|
+    if ENV["SLACK_URL"].length != 0 && ENV["FL_SLACK_CHANNEL"].length != 0
+      slack(
+        message: "Now building Android #{options[:version_number]}",
+        default_payloads: [],
+        username: "Jenkins Tag"
+      )
+    end
+  end
+
+  desc "Run calabash tests"
+  private_lane :run_calabash do |options|
+    apk_path = options[:apk_path]
+    sh("cd .. && calabash_android run #{apk_path}")
+  end
+
+  desc "Iterate through each build variants and create a build"
+  private_lane :all_builds do |options|
+    is_upload_lane = options[:hockey]
+
+    for variant in build_variants do
+      set_environment_variables(build_variant: variant, build_aab: false)
+      should_upload_variant = variant["upload_to_dist_portal"]
+      setting = get_setting(variant: variant)
+      build_and_upload_aab = setting["build_and_upload_aab"]
+
+      if is_upload_lane
+        add_icon_badges(
+          variant: variant,
+          version_number: options[:version_number]
+        )
+      end
+
+      perform_gradle
+      
+      if is_upload_lane && should_upload_variant
+        apk_path = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+        build_type = lane_context[SharedValues::GRADLE_BUILD_TYPE]
+        product_flavor = lane_context[SharedValues::GRADLE_FLAVOR]
+        root = Pathname.new(apk_path).parent.parent.parent #this will go up until outputs folder
+        puts "Root path: #{root}".blue
+        root_mapping = Pathname.new(lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]).parent.parent.parent #this will go up until outputs folder
+
+        mapping_path = root_mapping + "mapping/"
+        if !product_flavor.empty?
+          mapping_path = mapping_path + "#{product_flavor}/"
+        end
+        if !build_type.empty?
+          mapping_path = mapping_path + "#{build_type}/"
+        end
+        mapping_path = mapping_path + "mapping.txt"
+
+        puts "Mapping path: #{mapping_path}".blue
+        mapping_path = File.exist?(mapping_path) ? mapping_path.to_s : nil
+        puts "APK path: #{apk_path}".blue
+        puts "Mapping path: #{mapping_path}".blue
+        restricted_teams = setting["hockey_restricted_distribution_groups"].join(", ")
+        puts "Restricted teams: #{restricted_teams}".blue
+        upload_to_dist_portal(restricted_teams: restricted_teams, apk_path: apk_path.to_s, mapping_path: mapping_path)
+        slack_message(variant: variant)
+      end
+
+      if build_and_upload_aab && is_upload_lane
+        #perform gradle clean
+        gradle(task: "clean", flavor: "", build_type: "")
+
+        #set env vars for aab
+        set_environment_variables(build_variant: variant, build_aab: true)
+
+        #perform gradle again
+        perform_gradle
+
+        lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH] = nil
+
+        aab_path = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+        json_key = setting["google_play_json_key"]
+        package_name = setting["upload_aab_package_name"]
+        puts "AAB Path: #{aab_path}".green
+        upload_to_play_store_internal(aab_path: aab_path.to_s, json_key: json_key, package_name: package_name)
+      end
+
+      if variant["app_icon_path"].length != 0
+        # We need to remove the first '/' from the the `app_icon_path` to work with `git checkout --`
+        path_to_reset = variant["app_icon_path"][1..-1]
+        sh("cd .. && git checkout -- #{path_to_reset}")
+      end
+      
+    end
+  end
+
+  desc "Add Icon badges if required"
+  private_lane :add_icon_badges do |options|
+    variant = options[:variant]
+    version_number = options[:version_number]
+
+    if variant["add_icon_badge"]
+      add_badge(
+        no_badge: true,
+        shield: "#{variant["setting"]}-#{version_number}-orange",
+        shield_io_timeout: 10,
+        glob: variant["app_icon_path"]
+      )
+
+      puts "Added icon badge".blue
+    else
+      puts "Did not add icon badge".blue
+    end
+  end
+
+  desc "Set the environment variables for the given variant"
+  private_lane :set_environment_variables do |options|
+    build_variant = options[:build_variant]
+    build_aab = options[:build_aab]
+    setting = get_setting(variant: build_variant)
+
+    # gradle related (`fastlane action gradle` for more info)
+    build_type = build_aab ? "bundle" : "assemble"
+    build_module = setting["module_name"].to_s.empty? ? "" : "#{setting["module_name"].to_s}:"
+    ENV["FL_GRADLE_TASK"] = "#{build_module}#{build_type}"
+    ENV["FL_GRADLE_FLAVOR"] = build_variant["product_flavor"]
+    ENV["FL_GRADLE_BUILD_TYPE"] = build_variant["build_type"]
+
+    # hockey related (`fastlane action hockey` for more info)
+    ENV["FL_HOCKEY_API_TOKEN"] = setting["hockey_api_token"] || hockey_api_token
+    ENV["FL_HOCKEY_NOTIFY"] = setting["distribution_notify_users"] ? "1" : "0"
+    ENV["FL_HOCKEY_NOTES"] = setting["commit_messages_as_release_notes"] ? get_commit_changelog : setting["distribution_release_notes"]
+    ENV["FL_HOCKEY_PUBLIC_IDENTIFIER"] = setting["hockey_app_id"]
+    ENV["FL_HOCKEY_STATUS"] = setting["hockey_auto_release"] ? "2" : "1"
+
+    # appcenter related (`fastlane action appcenter_upload` for more info)
+    ENV["APPCENTER_API_TOKEN"] = appcenter_api_token
+    ENV["APPCENTER_APP_NAME"] = setting["appcenter_app_name"]
+    groups = setting["appcenter_distribution_groups"]
+    if !groups.empty?
+      ENV["APPCENTER_DISTRIBUTE_DESTINATIONS"] = setting["appcenter_distribution_groups"].join(",")
+    end
+    ENV["APPCENTER_DISTRIBUTE_NOTIFY_TESTERS"] = setting["distribution_notify_users"] ? "true" : "false"
+    ENV["APPCENTER_DISTRIBUTE_RELEASE_NOTES"] = setting["commit_messages_as_release_notes"] ? get_commit_changelog : setting["distribution_release_notes"]
+    ENV["APPCENTER_OWNER_TYPE"] = "organization"
+    ENV["APPCENTER_OWNER_NAME"] = "Tigerspike-Organization"    
+
+  end
+
+  desc "Gets the git messages of all commits until the last tag (or first commit if there is no tag)"
+  private_lane :get_commit_changelog do
+    messages = changelog_from_git_commits
+
+    if !messages
+      puts "There is no previously existing tag. Using ALL git commit messages as release notes".blue
+      messages = changelog_from_git_commits(commits_count: number_of_commits)
+    else 
+      puts "Use all git commit messages until last tag as release notes".blue
+    end
+
+    messages = "Changelog since last release:\n\n#{messages}"
+  end
+
+  desc "Perform `assemble` gradle task with specified build variants in config.json"
+  private_lane :perform_gradle do
+    gradle
+    puts "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}".blue
+  end
+
+  desc "Get setting for a given build variant"
+  private_lane :get_setting do |options|
+    build_variant = options[:variant]
+    variant_setting_name = build_variant["setting"] || default_settings_name
+    default_setting = settings[default_settings_name]
+    # In case there is no specific setting, pass the default settings
+    specific_setting = settings[variant_setting_name] || default_setting
+    # Properties in specific_setting take precedence
+    setting = default_setting.merge(specific_setting)
+  end
+
+  desc "Upload build to hockey"
+  private_lane :upload_to_dist_portal do |options|
+    apk_path = options[:apk_path]
+    mapping_path = options[:mapping_path]
+    if use_appcenter_to_upload
+      #upload the APK.
+      appcenter_upload(
+        apk: apk_path
+      )
+
+      version = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]['short_version']
+      build_number = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]['version']
+
+      #upload the mapping.
+      appcenter_upload(
+        version: version,
+        build_number: build_number,
+        upload_mapping_only: true,
+        mapping: mapping_path,
+      )
+    else
+      hockey(
+        apk: apk_path,
+        dsym: mapping_path,
+        teams: options[:restricted_teams]
+      )
+    end
+  end
+
+  desc "Upload AAB or APKs Directly to Google Play Store"
+  private_lane :upload_to_play_store_internal do |options|
+    aab_path = options[:aab_path]
+    json_key = options[:json_key]
+    package_name = options[:package_name]
+    upload_to_play_store(
+        aab: aab_path,
+        apk: nil,
+        json_key: json_key,
+        package_name: package_name,
+        track: "internal"
+    )
+  end
+
+
+  desc "Send a message to slack if Slack details are provided"
+  private_lane :slack_message do |options|
+    build_variant = options[:variant]
+    build_variant_name = "#{build_variant["product_flavor"]}#{build_variant["build_type"]}"
+
+    if ENV["SLACK_URL"].length != 0 && ENV["FL_SLACK_CHANNEL"].length != 0
+      if use_appcenter_to_upload
+        version = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]['short_version']
+        build_number = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]['version']
+        config_url = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]['config_url']
+        release_notes = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]['release_notes'] 
+        app_name = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]['app_display_name']
+        os = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]['app_os']
+        payload = {
+          "Version" => "#{version} (#{build_number})",
+          "Platform" => os,
+          "Release Notes" => release_notes,
+          "Install Url" => config_url
+        }
+        slack(
+          message: "New Version Available for #{app_name}",
+          payload: payload,
+          default_payloads: [:git_author, :git_branch, :last_git_commit]
+        )  
+      else 
+      version = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION]['version']
+      config_url = lane_context[SharedValues::HOCKEY_BUILD_INFORMATION]['config_url']
+      message = "Build #{version} of #{build_variant_name} is available in HockeyApp!\nAvailable at: #{config_url}"
+
+      slack(
+        message: message,
+        default_payloads: [:git_author, :git_branch, :last_git_commit]
+      )
+    end
+
+  end
+
+  end
+
+  desc "Send a slack error message if possible"
+  private_lane :send_slack_error do |options|
+    message = options[:message]
+    if ENV["SLACK_URL"].length != 0 && ENV["FL_SLACK_CHANNEL"].length != 0
+      slack(
+        message: message,
+        success: false
+      )
+    end
+  end
+
+  after_all do |lane|
+    # After all lanes
+  end
+
+  error do |lane, exception|
+    send_slack_error(message: exception.message)
+  end
+end

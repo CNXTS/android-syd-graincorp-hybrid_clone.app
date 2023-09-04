@@ -1,0 +1,82 @@
+{
+    "project_name": "GrainCorp Hybrid App",
+    "hockey_api_token": "", //Needed if you want to drive any upload lane. Can leave as empty string if not needed.
+    "use_appcenter_to_upload": true,
+    "appcenter_api_token": "6771ac54bbe11bf601d3dcb3eed955f8bae6a234", //Needed if you want to drive any upload lane. Can leave as empty string if not needed.
+    "slack_webhook_url": "", //Needed if you want to use slack. Can leave as empty string if not needed.
+    "slack_channel": "", //Needed if you want to use slack (can be a channel eg. #syd-myapp, or a username eg. @pangers). Can leave as empty string if not needed.
+    "build_variants": [ //The builds you want to create. The number of objects in this array is the number of apk's generated
+        {
+            "build_type": "internalDebug", //Build type as specified in your build.gradle file.
+            "product_flavor": "", //Product flavor as specified in your build.gradle file. First letter needs to be capitalised. May be an empty string if there is no product flavour.
+            "upload_to_dist_portal": true, //Do you want to upload this scheme to HockeyApp when running `build_and_upload` or `test_build_and_upload` lanes (other lanes will never upload anything)?
+            "setting": "dev", //The setting to use in the `settings` object below
+            "add_icon_badge": false, // Do you want to add a badge to the app icon which indicates the environment and version number? The environment text used is the name of the "setting" object for this scheme (so make sure it's not too long).
+            "app_icon_path": ""// Path to the app icon of the project. Can be empty string if `add_icon_badge` is false. MUST have '/' at the beginning of the string. Make sure to use wildcard to capture all the different densities.
+        },
+        {
+            "build_type": "internalRelease",
+            "product_flavor": "",
+            "upload_to_dist_portal": true,
+            "setting": "uat",
+            "add_icon_badge": false,
+            "app_icon_path": ""
+        },
+        {
+            "build_type": "productionDebug",
+            "product_flavor": "",
+            "upload_to_dist_portal": true,
+            "setting": "qa",
+            "add_icon_badge": false,
+            "app_icon_path": ""
+        },
+        {
+            "build_type": "internalStaging",
+            "product_flavor": "",
+            "upload_to_dist_portal": true,
+            "setting": "stg",
+            "add_icon_badge": false,
+            "app_icon_path": ""
+        },
+        {
+            "build_type": "productionRelease",
+            "product_flavor": "",
+            "upload_to_dist_portal": true,
+            "setting": "store",
+            "add_icon_badge": false,
+            "app_icon_path": ""
+        }
+    ],
+    "settings": {
+        "default": {
+            "module_name": "", //If you have multi module project setup then you can specify the name of the module that you want to build. This field is optional and can be left empty.
+            "build_and_upload_aab": false, //Do you want to upload the AAB to Google Play Store. If Yes, set this to true, Make sure that the google_play_json_key and upload_aab_package_name properties are correctly filled.
+            "google_play_json_key": "", //The path of the json key to upload the AABs to Google Play Store.
+            "upload_aab_package_name": "", //The name of the AAB Package that you are uploading to Google Play Store.
+            "hockey_auto_release": true, //Do you want the app available to users once uploaded to HockeyApp? Only needed if `upload_to_dist_portal` for scheme is true.
+            "hockey_restricted_distribution_groups": [], //Ex. ["1234"] If hockey_auto_realease above is true, Do you want to restrict it to certain distribution groups? If yes enter a string array of distribution groups ID NUMBERS otherwise the build will be unrestricted. Hockey Dashboard -> Distribution Groups -> Click on the desired distribution group -> The ID is in the URL
+            "appcenter_distribution_groups": ["All-users-of-SYD-GrainCorp-Hybrid-App"], //Ex. ["Tigerspike-Sydney", "Collaborators"], Name of the distribution groups that you want to distribute to.
+            "distribution_notify_users": false, //Do you want to notify users once uploaded to HockeyApp? Only needed if `upload_to_dist_portal` for scheme is true.
+            "distribution_release_notes": "GrainCorp app uploaded via Fastlane", //What release notes do you want for the app? Only needed if `upload_to_dist_portal` for scheme is true.
+            "commit_messages_as_release_notes": true, //Do you want to use all commit messages until the last tag as release notes, rather than the `hockey_release_notes` property above?
+            "hockey_app_id": "", //Hockey app id of the build variant. Can be empty string if build variant is not being uploaded 
+            "appcenter_app_name": "", //Appcenter App Name
+            "exclude_from_test": false//If you are running tests, this flag will determine if you want to exclude this variant from running tests.
+        },
+         "dev": {
+            "appcenter_app_name": "SYD-GrainCorp-Hybrid-App-4"
+        },
+        "qa": {
+            "appcenter_app_name": "SYD-GrainCorp-Hybrid-App-5"
+        },
+        "uat": {
+            "appcenter_app_name": "SYD-GrainCorp-Hybrid-App-6"
+        },
+        "stg": {
+            "appcenter_app_name": "SYD-GrainCorp-Hybrid-App-9"
+        },
+        "store": {
+            "appcenter_app_name": "SYD-GrainCorp-Hybrid-App-7"
+        }
+    }
+}
