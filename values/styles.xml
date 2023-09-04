@@ -1,0 +1,144 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/dusk_blue</item>
+        <item name="colorPrimaryDark">@color/dusk_blue</item>
+        <item name="colorAccent">@color/teal_blue</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/splash_screens</item>
+        <item name="android:statusBarColor">@color/splashScreenStatusBarColor</item>
+    </style>
+
+    <style name="GCDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="numericKeypadViewStyle">@style/NumericKeypadViewStyle</item>
+    </style>
+
+    <style name="GCEditText">
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/background_warm_grey</item>
+        <item name="android:textColor">@color/slate_grey</item>
+    </style>
+
+    <style name="GCButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Onboarding">
+        <item name="android:textColor">@color/charcoal_grey</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">@dimen/medium_margin</item>
+    </style>
+
+    <style name="Onboarding.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Onboarding.Subtitle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+    </style>
+
+
+    <style name="GCButton.Blue" parent="GCButton">
+        <item name="android:background">@drawable/background_blue_button</item>
+    </style>
+
+    <style name="GCButton.Teal" parent="GCButton">
+        <item name="android:background">@color/teal_blue</item>
+    </style>
+
+    <style name="GCButton.DuckEggBlue" parent="GCButton">
+        <item name="android:background">@color/duck_egg_blue</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="GCBottomBarText">
+        <item name="android:textColor">@color/charcoal_grey</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="GCTitle">
+        <item name="android:textColor">@color/charcoal_grey</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="GCSubheading">
+        <item name="android:textColor">@color/charcoal_grey</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="GCTextLink">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="GCBody">
+        <item name="android:textColor">@color/charcoal_grey</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="GCBody.Error">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="GCProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateOnly">true</item>
+    </style>
+
+    <style name="keyboard_row">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@drawable/keypad_divider</item>
+        <item name="android:gravity">center</item>
+        <item name="android:showDividers">beginning|middle|end</item>
+    </style>
+
+    <style name="keypad_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">@dimen/small_margin</item>
+        <item name="android:paddingBottom">@dimen/small_margin</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@drawable/background_keyboard_button</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    </style>
+
+    <style name="keypad_button_auxiliary" parent="keypad_button">
+        <item name="android:background">@drawable/background_keyboard_button_auxiliary</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="NumericKeypadViewStyle">
+        <item name="maxInputLength">@integer/pin_max_length</item>
+        <item name="navigateBackKeyText">@string/btn_navigate_back</item>
+    </style>
+
+    <style name="AppTheme.Launcher.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.Launcher.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

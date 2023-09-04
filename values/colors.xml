@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="splashScreenStatusBarColor">#1f2b4d</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bottom_nav_icon_checked">#15467A</color>
+    <color name="grey">#8F969F</color>
+    <color name="off_blue">#587BAD</color>
+    <color name="teal_blue">#0080a3</color>
+    <color name="brownish_grey">#6A6A6A</color>
+    <color name="slate_grey">#616871</color>
+    <color name="dusk_blue">#2B5F92</color>
+    <color name="aqua_blue">#00B9E4</color>
+    <color name="bg_grey">#E3E3E3</color>
+    <color name="divider_grey">#E0E0E0</color>
+    <color name="charcoal_grey">#3F454F</color>
+    <color name="pale_yellow">#FFF5C4</color>
+    <color name="warm_grey">#969696</color>
+    <color name="sunflower_yellow">#FFD400</color>
+    <color name="dark_blue">#014681</color>
+    <color name="white_smoke">#EFEFEF</color>
+    <color name="light_blue_grey">#D9E6ED</color>
+    <color name="duck_egg_blue">#B5E5F2</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="dark_grey">#6B717A</color>
+    <color name="pale_grey">#E4E7EC</color>
+    <color name="red">#E00F00</color>
+</resources>

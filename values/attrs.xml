@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NumericKeypadView">
+        <attr name="maxInputLength" format="integer" />
+        <attr name="navigateBackKeyText" format="string" />
+    </declare-styleable>
+    <declare-styleable name="GCDialog">
+        <attr name="numericKeypadViewStyle" format="reference" />
+    </declare-styleable>
+</resources>
