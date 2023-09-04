@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.webling.graincorp.ui.pinonboarding.PinOnboardingActivity">
+
+    <include layout="@layout/toolbar_crop_connect_white_logo" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_pin_onboarding_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/GCTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="@string/pin_onboarding_title" />
+
+            <TextView
+                style="@style/GCBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:paddingTop="@dimen/large_margin"
+                android:text="@string/pin_onboarding_body"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/btn_pin_onboarding_primary"
+                style="@style/GCButton.Teal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/pin_onboarding_action_primary" />
+
+            <Button
+                android:id="@+id/btn_pin_onboarding_secondary"
+                style="@style/GCButton.DuckEggBlue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:text="@string/pin_onboarding_action_secondary" />
+
+            <TextView
+                android:id="@+id/txt_pin_onboarding_tertiary"
+                style="@style/GCTextLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:text="@string/pin_onboarding_action_tertiary" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressbar_pin_onboarding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateOnly="true"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </FrameLayout>
+</LinearLayout>

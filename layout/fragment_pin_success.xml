@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.webling.graincorp.ui.pin.pinsuccess.PinSuccessFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_success_large" />
+
+    <TextView
+        style="@style/GCSubheading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:gravity="center"
+        android:paddingTop="@dimen/large_margin"
+        android:text="@string/pin_setup_success_subtitle"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/pin_success_btn"
+        style="@style/GCButton.Teal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/pin_setup_success_button" />
+
+</LinearLayout>

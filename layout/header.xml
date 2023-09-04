@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/header_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="24dp"
+            android:visibility="gone"
+            app:cardElevation="4dp"
+            app:contentPaddingBottom="16dp"
+            app:contentPaddingLeft="12dp"
+            app:contentPaddingRight="12dp"
+            app:contentPaddingTop="24dp"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/header_error_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_warning_small"
+                android:gravity="center"
+                android:textColor="@color/brownish_grey"
+                android:textSize="13sp"
+                tools:text="You will need to log in to edit any settings / Notifs are off" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/header_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingBottom="20dp"
+            android:paddingStart="12dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/charcoal_grey"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            tools:text="tools:text" />
+
+    </LinearLayout>
+</merge>

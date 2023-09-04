@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/smaller_margin"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:clickable="true"
+    app:cardCornerRadius="0dp"
+    app:cardMaxElevation="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/bid_commodity_grade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue_grey"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_vertical"
+            android:paddingBottom="4dp"
+            android:paddingStart="10dp"
+            android:paddingTop="@dimen/small_margin"
+            android:textColor="@color/charcoal_grey"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            tools:text="Wheat — APH2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue_grey"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/small_margin"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/bid_site_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:gravity="start"
+                android:textColor="@android:color/black"
+                tools:text="at Moree Sub" />
+
+            <TextView
+                android:id="@+id/bid_season_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="end"
+                android:textColor="@color/charcoal_grey"
+                android:textSize="13sp"
+                tools:text="16/17" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/home_bid_item_top_cash_bid"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/bid_price_change_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    tools:src="@drawable/ic_mkt_up_green" />
+
+                <TextView
+                    android:id="@+id/bid_price_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textColor="@color/charcoal_grey"
+                    android:textSize="13sp"
+                    tools:text="$2.99" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/light_blue_grey" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/bid_no_active_bids"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/home_bid_item_no_active_bids"
+                android:textColor="@color/slate_grey"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/bid_active_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bid_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:textStyle="normal"
+                    tools:text="$238.00" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/bid_buyer_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="9"
+                        android:gravity="start"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp"
+                        tools:text="GraincorpMarketing" />
+
+                    <ImageView
+                        android:id="@+id/bid_preffered_buyer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_pref_buyer_small"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

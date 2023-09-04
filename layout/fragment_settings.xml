@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    tools:context="com.webling.graincorp.ui.settings.SettingsFragment">
+
+    <include layout="@layout/header" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/smaller_margin"
+        android:layout_marginLeft="@dimen/smaller_margin"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/smaller_margin"
+        android:layout_marginRight="@dimen/smaller_margin"
+        android:clickable="false"
+        app:cardCornerRadius="0dp"
+        app:cardMaxElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/settings_layout_pin_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/settings_text_pin_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginBottom="@dimen/medium_margin"
+                    android:alpha="0.2"
+                    android:drawableEnd="@drawable/ic_switch_off_enabled"
+                    android:gravity="center_vertical"
+                    android:text="@string/settings_pin_login"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@color/divider_grey" />
+
+            <LinearLayout
+                android:id="@+id/notification_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/menu_child_item_selector"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginBottom="@dimen/medium_margin"
+                    android:drawableEnd="@drawable/ic_chevron_right_grey"
+                    android:gravity="center_vertical"
+                    android:text="@string/settings_notification_settings"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@color/divider_grey" />
+
+            <LinearLayout
+                android:id="@+id/other_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/menu_child_item_selector"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginBottom="@dimen/medium_margin"
+                    android:drawableEnd="@drawable/ic_chevron_right_grey"
+                    android:text="@string/settings_other_settings"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.webling.graincorp.ui.notifications.NotificationsFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/header" />
+
+        <TextView
+            android:id="@+id/notifications_view_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:lineSpacingExtra="10sp"
+            android:paddingEnd="12dp"
+            android:text="@string/notifications_fragment_view_settings"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/no_notifications"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_grey"
+            android:lineSpacingExtra="4sp"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="12dp"
+            android:text="@string/notifications_fragment_empty"
+            android:textColor="@color/charcoal_grey"
+            android:textSize="13sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notifications_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_grey"
+            android:paddingLeft="@dimen/small_margin"
+            android:paddingRight="@dimen/small_margin" />
+
+        <ProgressBar
+            android:id="@+id/notifications_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+</LinearLayout>

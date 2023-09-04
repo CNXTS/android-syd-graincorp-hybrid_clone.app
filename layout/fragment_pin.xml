@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.webling.graincorp.ui.pin.PinFragment">
+
+    <ProgressBar
+        android:id="@+id/pin_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/pin_layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/pin_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/medium_margin"
+                android:paddingStart="@dimen/medium_margin">
+
+                <TextView
+                    android:id="@+id/pin_subtitle"
+                    style="@style/GCSubheading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:gravity="center_horizontal"
+                    android:text="@string/pin_setup_subtitle" />
+
+                <TextView
+                    android:id="@+id/pin_error"
+                    style="@style/GCBody.Error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:gravity="center_horizontal"
+                    android:minLines="2"
+                    android:visibility="invisible"
+                    tools:text="@string/pin_setup_error_four_zeros"
+                    tools:visibility="visible" />
+
+                <include
+                    android:id="@+id/pinInclude"
+                    layout="@layout/layout_pin_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin" />
+
+                <TextView
+                    android:id="@+id/pin_body"
+                    style="@style/GCBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:gravity="center_horizontal"
+                    android:text="@string/pin_setup_body" />
+
+            </LinearLayout>
+        </ScrollView>
+
+
+        <com.webling.graincorp.widget.NumericKeypadView
+            android:id="@+id/pin_keypad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom" />
+
+    </RelativeLayout>
+</LinearLayout>

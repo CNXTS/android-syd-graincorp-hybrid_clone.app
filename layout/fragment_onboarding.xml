@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="com.webling.graincorp.ui.onboarding.OnboardingFragment">
+
+    <TextView
+        android:id="@+id/onboarding_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_weight="1"
+        style="@style/Onboarding.Title"/>
+
+    <ImageView
+        android:id="@+id/onboarding_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="7" />
+
+    <TextView
+        android:id="@+id/onboarding_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_weight="2"
+        style="@style/Onboarding.Subtitle" />
+
+
+</LinearLayout>

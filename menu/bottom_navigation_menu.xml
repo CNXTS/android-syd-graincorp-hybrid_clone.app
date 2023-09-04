@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tab_home"
+        android:icon="@drawable/bottom_navigation_home_selector"
+        android:title="@string/tab_home_label" />
+    <item
+        android:id="@+id/tab_notifications"
+        android:icon="@drawable/bottom_navigation_notifications_selector"
+        android:title="@string/tab_notifications_label" />
+    <item
+        android:id="@+id/tab_settings"
+        android:icon="@drawable/bottom_navigation_settings_selector"
+        android:title="@string/tab_settings_label" />
+    <item
+        android:id="@+id/tab_menu"
+        android:icon="@drawable/bottom_navigation_menu_selector"
+        android:title="@string/tab_menu_label" />
+</menu>

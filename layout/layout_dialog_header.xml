@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        style="@style/GCTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/margin_32p"
+        tools:text="Title" />
+
+    <ImageButton
+        android:id="@+id/dialog_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:background="@color/transparent"
+        android:contentDescription="@string/content_description_close"
+        android:src="@drawable/ic_close" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/dialog_title"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:background="@drawable/divider" />
+
+</RelativeLayout>

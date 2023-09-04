@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.webling.graincorp.ui.login.LoginActivity">
+
+    <include
+        android:id="@+id/dialog_header_include"
+        layout="@layout/layout_dialog_header" />
+
+    <TextView
+        android:id="@+id/login_text_switch_input"
+        style="@style/GCTextLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:text="Use PIN"
+        tools:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/login_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
